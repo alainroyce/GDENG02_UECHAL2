@@ -28,7 +28,7 @@ AGDENG02_UECHAL2Projectile::AGDENG02_UECHAL2Projectile()
 	ProjectileMovement->bShouldBounce = true;
 
 	// Die after 3 seconds by default
-	InitialLifeSpan = 3.0f;
+	InitialLifeSpan = 0.0f;
 }
 
 void AGDENG02_UECHAL2Projectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
@@ -38,6 +38,6 @@ void AGDENG02_UECHAL2Projectile::OnHit(UPrimitiveComponent* HitComp, AActor* Oth
 	{
 		OtherComp->AddImpulseAtLocation(GetVelocity() * 100.0f, GetActorLocation());
 
-		Destroy();
+		//Destroy();
 	}
 }
