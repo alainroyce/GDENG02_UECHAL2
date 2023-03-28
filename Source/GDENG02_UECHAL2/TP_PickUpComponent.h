@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Components/SphereComponent.h"
+#include "GDENG02_UECHAL2Projectile.h"
 #include "GDENG02_UECHAL2Character.h"
 #include "TP_PickUpComponent.generated.h"
 
@@ -43,6 +44,12 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UpgradePickup)
 		TEnumAsByte<UpgradePickup> pickUpUpgrade;
+
+	int upgradeResult;
+
+	int GetUpgradeResult();
+
+	AGDENG02_UECHAL2Projectile* Projectile;
 
 	UTP_PickUpComponent();
 protected:

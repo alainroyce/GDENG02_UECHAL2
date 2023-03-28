@@ -3,6 +3,11 @@
 #include "TP_PickUpComponent.h"
 #include "GDENG02_UECHAL2Projectile.h"
 
+int UTP_PickUpComponent::GetUpgradeResult()
+{
+	return this->upgradeResult;
+}
+
 UTP_PickUpComponent::UTP_PickUpComponent()
 {
 	// Setup the Sphere Collision
@@ -19,6 +24,7 @@ void UTP_PickUpComponent::BeginPlay()
 
 void UTP_PickUpComponent::OnSphereBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
+	UE_LOG(LogTemp, Warning, TEXT("Other Actor Name: %s"), *OverlappedComponent->GetOwner()->GetName());
 
 	if(pickUpType == Weapon)
 	{
@@ -35,24 +41,41 @@ void UTP_PickUpComponent::OnSphereBeginOverlap(UPrimitiveComponent* OverlappedCo
 	}
 	else if (pickUpType == Upgrade) 
 	{
-		AGDENG02_UECHAL2Character* Character = Cast<AGDENG02_UECHAL2Character>(OtherActor);
-		switch (pickUpUpgrade) 
+		this->Projectile = Cast<AGDENG02_UECHAL2Projectile>(OtherActor);
+		switch (pickUpUpgrade)
 		{
-			case YellowCone: 
-				// Takes Projectile and sets UpgradeType (from Projectile)
-					break;
-			case RedCylinder: 
-				// Takes Projectile and sets UpgradeType (from Projectile)
-					break;
-			case WoodenBox: 
-				// Takes Projectile and sets UpgradeType (from Projectile)
-					break;
-			case OrangeCapsule: 
-				// Takes Projectile and sets UpgradeType (from Projectile)
+		case YellowCone:
+			// Takes Projectile and sets UpgradeType (from Projectile)
+			//this->upgradeResult = 0;
+			this->Projectile->SetUpgradeProjectile(0);
+			UE_LOG(LogTemp, Warning, TEXT("Shrinking Bullet"));
+			break;
+		case RedCylinder:
+			// Takes Projectile and sets UpgradeType (from Projectile)
+			//this->upgradeResult = 1;
+			this->Projectile->SetUpgradeProjectile(1);
+			UE_LOG(LogTemp, Warning, TEXT("Expanding Bullet"));
+			break;
+		case WoodenBox:
+			// Takes Projectile and sets UpgradeType (from Projectile)
+			//this->upgradeResult = 2;
+			this->Projectile->SetUpgradeProjectile(2);
+			UE_LOG(LogTemp, Warning, TEXT("Regular-sized Bullet"));
+			break;
+		case OrangeCapsule:
+			// Takes Projectile and sets UpgradeType (from Projectile)
+			//this->upgradeResult = 3;
+			this->Projectile->SetUpgradeProjectile(3);
+			UE_LOG(LogTemp, Warning, TEXT("Double Expand Bullet"));
+			break;
+		default:
+			//this->upgradeResult = 2;
+			this->Projectile->SetUpgradeProjectile(2);
+		};
 
 
-					break;
-		}
+		//Destroy PickUp Object
+		OverlappedComponent->GetOwner()->Destroy();
 	}
 	
 }

@@ -9,6 +9,7 @@
 class USphereComponent;
 class UProjectileMovementComponent;
 
+/*
 UENUM(BlueprintType)
 enum UpgradeType
 {
@@ -17,6 +18,7 @@ enum UpgradeType
 	Regular UMETA(DisplayName = "Bullet Default Size Upgrade"), // Wooden Box
 	DoubleExpand UMETA(DisplayName = "Bullet Extra Expand Upgrade") // Orange Capsule
 };
+*/
 
 UCLASS(config=Game)
 class AGDENG02_UECHAL2Projectile : public AActor
@@ -45,10 +47,17 @@ public:
 	/** Returns ProjectileMovement subobject **/
 	UProjectileMovementComponent* GetProjectileMovement() const { return ProjectileMovement; }
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UpgradeType)
-		TEnumAsByte<UpgradeType> bulletUpgrade;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		int bulletUpgrade;
+		//TEnumAsByte<UpgradeType> bulletUpgrade;
+
+	int pickUpType;
 
 	// Logic for Bullet Upgrades
 	void UpgradeProjectile();
+	void SetUpgradeProjectile(int upgradeType);
+
+protected:
+	//UTP_PickUpComponent* pickUpComp;
 };
 
