@@ -12,6 +12,15 @@
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnPickUp, AGDENG02_UECHAL2Character*, PickUpCharacter);
 
 UENUM(BlueprintType)
+enum UpgradePickup
+{
+	YellowCone UMETA(DisplayName = "Bullet Shrink Upgrade"),
+	RedCylinder UMETA(DisplayName = "Bullet Expand Upgrade"),
+	WoodenBox UMETA(DisplayName = "Bullet Default Size Upgrade"),
+	OrangeCapsule UMETA(DisplayName = "Bullet Extra Expand Upgrade")
+};
+
+UENUM(BlueprintType)
 enum PickupType
 {
 	Upgrade UMETA(DisplayName = "Upgrade"), // Yellow Cone
@@ -28,6 +37,12 @@ public:
 	/** Delegate to whom anyone can subscribe to receive this event */
 	UPROPERTY(BlueprintAssignable, Category = "Interaction")
 	FOnPickUp OnPickUp;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = PickupType)
+		TEnumAsByte<PickupType> pickUpType;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UpgradePickup)
+		TEnumAsByte<UpgradePickup> pickUpUpgrade;
 
 	UTP_PickUpComponent();
 protected:
