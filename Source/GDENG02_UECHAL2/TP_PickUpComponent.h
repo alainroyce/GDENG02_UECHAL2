@@ -11,6 +11,13 @@
 // The character picking this up is the parameter sent with the notification
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnPickUp, AGDENG02_UECHAL2Character*, PickUpCharacter);
 
+UENUM(BlueprintType)
+enum PickupType
+{
+	Upgrade UMETA(DisplayName = "Upgrade"), // Yellow Cone
+	Weapon UMETA(DisplayName = "Weapon"), // Red Cylinder
+};
+
 UCLASS(Blueprintable, BlueprintType, ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class GDENG02_UECHAL2_API UTP_PickUpComponent : public USphereComponent
 {

@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Components/SceneComponent.h"
+#include "GDENG02_UECHAL2Character.h"
 #include "TP_UpgradeComponent.generated.h"
 
 UENUM(BlueprintType)
@@ -30,10 +31,21 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
+	UFUNCTION()
+		void OnSphereBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UpgradeType)
 		TEnumAsByte<UpgradeType> bulletUpgrade;
+
+	// Logic for Bullet Upgrades
+	void UpgradeProjectile();
+
+private:
+
+	// Player Projectile
+	AGDENG02_UECHAL2Projectile* baseProjectile;
 };

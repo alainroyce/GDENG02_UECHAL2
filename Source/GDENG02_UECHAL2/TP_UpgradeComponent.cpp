@@ -2,6 +2,8 @@
 
 
 #include "TP_UpgradeComponent.h"
+#include "GDENG02_UECHAL2Projectile.h"
+#include "TP_PickUpComponent.h"
 
 // Sets default values for this component's properties
 UTP_UpgradeComponent::UTP_UpgradeComponent()
@@ -23,6 +25,11 @@ void UTP_UpgradeComponent::BeginPlay()
 	
 }
 
+void UTP_UpgradeComponent::OnSphereBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+
+}
+
 
 // Called every frame
 void UTP_UpgradeComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
@@ -30,5 +37,35 @@ void UTP_UpgradeComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	// ...
+}
+
+void UTP_UpgradeComponent::UpgradeProjectile()
+{
+	switch (this->bulletUpgrade) 
+	{
+	case Shrink: 
+		baseProjectile->SetActorRelativeScale3D(FVector(0.4,0.4,0.4));
+		break;
+
+	case Expand:
+		baseProjectile->SetActorRelativeScale3D(FVector(5, 5, 5));
+		break;
+
+	case DoubleExpand:
+		baseProjectile->SetActorRelativeScale3D(FVector(5, 5, 5));
+		break;
+
+	case Regular:
+		baseProjectile->SetActorRelativeScale3D(FVector(1, 1, 1));
+		break;
+
+	default:
+		baseProjectile->SetActorRelativeScale3D(FVector(1, 1, 1));
+		this->bulletUpgrade = Regular;
+		break;
+
+	}
+
+
 }
 
