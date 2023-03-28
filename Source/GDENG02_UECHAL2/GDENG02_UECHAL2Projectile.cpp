@@ -31,6 +31,15 @@ AGDENG02_UECHAL2Projectile::AGDENG02_UECHAL2Projectile()
 	InitialLifeSpan = 0.0f;
 }
 
+void AGDENG02_UECHAL2Projectile::BeginPlay()
+{
+	Super::BeginPlay();
+
+	UpgradeProjectile();
+
+
+}
+
 void AGDENG02_UECHAL2Projectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
 	// Only add impulse and destroy projectile if we hit a physics
@@ -41,3 +50,37 @@ void AGDENG02_UECHAL2Projectile::OnHit(UPrimitiveComponent* HitComp, AActor* Oth
 		//Destroy();
 	}
 }
+
+void AGDENG02_UECHAL2Projectile::UpgradeProjectile()
+{
+	switch (this->bulletUpgrade)
+	{
+	case Shrink:
+		this->SetActorScale3D(FVector(0.4, 0.4, 0.4));
+		this->FindComponentByClass<UStaticMeshComponent>()->SetMassOverrideInKg(NAME_None, 500 * 0.5);
+		break;
+
+	case Expand:
+		this->SetActorScale3D(FVector(5, 5, 5));
+		this->FindComponentByClass<UStaticMeshComponent>()->SetMassOverrideInKg(NAME_None, 500 * 2);
+		break;
+
+	case DoubleExpand:
+		this->SetActorScale3D(FVector(10, 10, 10));
+		this->FindComponentByClass<UStaticMeshComponent>()->SetMassOverrideInKg(NAME_None, 500 * 3);
+		break;
+
+	case Regular:
+		this->SetActorScale3D(FVector(1, 1, 1));
+		this->FindComponentByClass<UStaticMeshComponent>()->SetMassOverrideInKg(NAME_None, 500 * 1);
+		break;
+
+	default:
+		this->SetActorScale3D(FVector(1, 1, 1));
+		this->FindComponentByClass<UStaticMeshComponent>()->SetMassOverrideInKg(NAME_None, 500 * 1);
+		this->bulletUpgrade = Regular;
+		break;
+
+	};
+}
+

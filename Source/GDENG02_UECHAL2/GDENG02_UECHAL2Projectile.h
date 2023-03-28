@@ -9,6 +9,15 @@
 class USphereComponent;
 class UProjectileMovementComponent;
 
+UENUM(BlueprintType)
+enum UpgradeType
+{
+	Shrink UMETA(DisplayName = "Bullet Shrink Upgrade"), // Yellow Cone
+	Expand UMETA(DisplayName = "Bullet Expand Upgrade"), // Red Cylinder
+	Regular UMETA(DisplayName = "Bullet Default Size Upgrade"), // Wooden Box
+	DoubleExpand UMETA(DisplayName = "Bullet Extra Expand Upgrade") // Orange Capsule
+};
+
 UCLASS(config=Game)
 class AGDENG02_UECHAL2Projectile : public AActor
 {
@@ -25,6 +34,8 @@ class AGDENG02_UECHAL2Projectile : public AActor
 public:
 	AGDENG02_UECHAL2Projectile();
 
+	void BeginPlay();
+
 	/** called when projectile hits something */
 	UFUNCTION()
 	void OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
@@ -33,5 +44,11 @@ public:
 	USphereComponent* GetCollisionComp() const { return CollisionComp; }
 	/** Returns ProjectileMovement subobject **/
 	UProjectileMovementComponent* GetProjectileMovement() const { return ProjectileMovement; }
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UpgradeType)
+		TEnumAsByte<UpgradeType> bulletUpgrade;
+
+	// Logic for Bullet Upgrades
+	void UpgradeProjectile();
 };
 
