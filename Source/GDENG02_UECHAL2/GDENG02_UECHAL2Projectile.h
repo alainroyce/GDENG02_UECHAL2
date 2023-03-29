@@ -51,11 +51,8 @@ public:
 		int bulletUpgrade;
 		//TEnumAsByte<UpgradeType> bulletUpgrade;
 
-	int pickUpType;
-
 	// Logic for Bullet Upgrades
 	void UpgradeProjectile();
-	void SetUpgradeProjectile(int upgradeType);
 
 protected:
 	//UTP_PickUpComponent* pickUpComp;

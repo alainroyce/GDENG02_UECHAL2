@@ -29,6 +29,8 @@ AGDENG02_UECHAL2Projectile::AGDENG02_UECHAL2Projectile()
 
 	// Die after 3 seconds by default
 	InitialLifeSpan = 0.0f;
+
+	
 }
 
 void AGDENG02_UECHAL2Projectile::BeginPlay()
@@ -54,25 +56,31 @@ void AGDENG02_UECHAL2Projectile::OnHit(UPrimitiveComponent* HitComp, AActor* Oth
 
 void AGDENG02_UECHAL2Projectile::UpgradeProjectile()
 {
-	
-	switch (this->bulletUpgrade)
+	//int upgradeId = myPickUpComponent->returnUpgradeType();
+	//this->bulletUpgrade = upgradeId;
+
+	switch (bulletUpgrade)
 	{
 	case 0:
+		//Shrink
 		this->SetActorScale3D(FVector(0.4, 0.4, 0.4));
 		this->FindComponentByClass<UStaticMeshComponent>()->SetMassOverrideInKg(NAME_None, 500 * 0.5);
 		break;
 
 	case 1:
+		//Expand
 		this->SetActorScale3D(FVector(5, 5, 5));
 		this->FindComponentByClass<UStaticMeshComponent>()->SetMassOverrideInKg(NAME_None, 500 * 2);
 		break;
 
-	case 3:
+	case 2:
+		//Double Expand
 		this->SetActorScale3D(FVector(10, 10, 10));
 		this->FindComponentByClass<UStaticMeshComponent>()->SetMassOverrideInKg(NAME_None, 500 * 3);
 		break;
 
-	case 2:
+	case 3:
+		//Regular
 		this->SetActorScale3D(FVector(1, 1, 1));
 		this->FindComponentByClass<UStaticMeshComponent>()->SetMassOverrideInKg(NAME_None, 500 * 1);
 		break;
@@ -85,9 +93,3 @@ void AGDENG02_UECHAL2Projectile::UpgradeProjectile()
 
 	};
 }
-
-void AGDENG02_UECHAL2Projectile::SetUpgradeProjectile(int upgradeType)
-{
-	bulletUpgrade = upgradeType;
-}
-

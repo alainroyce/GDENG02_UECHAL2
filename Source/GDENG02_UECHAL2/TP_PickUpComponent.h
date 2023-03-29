@@ -4,14 +4,16 @@
 
 #include "CoreMinimal.h"
 #include "Components/SphereComponent.h"
-#include "GDENG02_UECHAL2Projectile.h"
 #include "GDENG02_UECHAL2Character.h"
+#include "GDENG02_UECHAL2Projectile.h"
+#include "UpgradeActor.h"
 #include "TP_PickUpComponent.generated.h"
 
 // Declaration of the delegate that will be called when someone picks this up
 // The character picking this up is the parameter sent with the notification
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnPickUp, AGDENG02_UECHAL2Character*, PickUpCharacter);
 
+/*
 UENUM(BlueprintType)
 enum UpgradePickup
 {
@@ -20,6 +22,7 @@ enum UpgradePickup
 	WoodenBox UMETA(DisplayName = "Bullet Default Size Upgrade"),
 	OrangeCapsule UMETA(DisplayName = "Bullet Extra Expand Upgrade")
 };
+*/
 
 UENUM(BlueprintType)
 enum PickupType
@@ -43,13 +46,10 @@ public:
 		TEnumAsByte<PickupType> pickUpType;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UpgradePickup)
-		TEnumAsByte<UpgradePickup> pickUpUpgrade;
+		int pickUpUpgrade = 2;
 
-	int upgradeResult;
-
-	int GetUpgradeResult();
-
-	AGDENG02_UECHAL2Projectile* Projectile;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		AUpgradeActor* myUpgrade;
 
 	UTP_PickUpComponent();
 protected:

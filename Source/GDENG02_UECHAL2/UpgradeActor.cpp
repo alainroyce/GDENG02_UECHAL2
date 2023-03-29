@@ -14,6 +14,23 @@ AUpgradeActor::AUpgradeActor()
 	MyMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("MY MESH"));
 	MyMesh->SetupAttachment(RootComponent);
 
+	//myProjectile = 
+
+}
+
+void AUpgradeActor::setUpgradeType()
+{
+	myProjectile->bulletUpgrade = PowerUpType;
+}
+
+void AUpgradeActor::OnSphereBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	UE_LOG(LogTemp, Warning, TEXT("Other Actor Name: %s"), *OverlappedComponent->GetOwner()->GetName());
+
+	//Logic to Pass Upgrade Type to Projectile
+
+	//Destroy PickUp Object
+	OverlappedComponent->GetOwner()->Destroy();
 }
 
 
