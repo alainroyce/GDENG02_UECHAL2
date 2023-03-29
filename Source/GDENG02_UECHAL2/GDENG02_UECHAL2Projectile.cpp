@@ -26,22 +26,30 @@ void AGDENG02_UECHAL2Projectile::BeginPlay()
 			switch (this->Character->currentBulletType) 
 			{
 			case 1:
-				this->projectileMesh->SetRelativeScale3D(FVector(0.1f, 0.1f, 0.1f));
+				CollisionComp->SetWorldScale3D(FVector(0.5f, 0.5f, 0.5f));
+				//this->projectileMesh->SetRelativeScale3D(FVector(0.1f, 0.1f, 0.1f));
+				//CollisionComp->SetSphereRadius(15.0f);
 				//this->SetActorScale3D(FVector(0.5f, 0.5f, 0.5f));
 				UE_LOG(LogTemp, Warning, TEXT("Changing bullet: Small"));
 				break;
 			case 2:
-				this->projectileMesh->SetRelativeScale3D(FVector(0.5f, 0.5f, 0.5f));
+				CollisionComp->SetWorldScale3D(FVector(2.5f, 2.5f, 2.5f));
+				//this->projectileMesh->SetRelativeScale3D(FVector(0.5f, 0.5f, 0.5f));
+				//CollisionComp->SetSphereRadius(75.0f);
 				//this->SetActorScale3D(FVector(1.5f, 1.5f, 1.5f));
 				UE_LOG(LogTemp, Warning, TEXT("Changing bullet: Large"));
 				break;
 			case 3:
-				this->projectileMesh->SetRelativeScale3D(FVector(1.0f, 1.0f, 1.0f));
+				CollisionComp->SetWorldScale3D(FVector(5.0f, 5.0f, 5.0f));
+				//this->projectileMesh->SetRelativeScale3D(FVector(1.0f, 1.0f, 1.0f));
+				//CollisionComp->SetSphereRadius(150.0f);
 				//this->SetActorScale3D(FVector(2.0f, 2.0f, 2.0f));
 				UE_LOG(LogTemp, Warning, TEXT("Changing bullet: Huge"));
 				break;
 			default:
-				this->projectileMesh->SetRelativeScale3D(FVector(0.2f, 0.2f, 0.2f));
+				CollisionComp->SetWorldScale3D(FVector(1.0f, 1.0f, 1.0f));
+				//this->projectileMesh->SetRelativeScale3D(FVector(0.2f, 0.2f, 0.2f));
+				//CollisionComp->SetSphereRadius(30.0f);
 				//this->SetActorScale3D(FVector(1.0f, 1.0f, 1.0f));
 				UE_LOG(LogTemp, Warning, TEXT("Changing bullet: Normal"));
 			}
