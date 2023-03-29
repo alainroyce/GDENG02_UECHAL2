@@ -4,21 +4,12 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "GDENG02_UECHAL2GameMode.h"
+#include "GDENG02_UECHAL2Character.h"
 #include "GDENG02_UECHAL2Projectile.generated.h"
 
 class USphereComponent;
 class UProjectileMovementComponent;
-
-/*
-UENUM(BlueprintType)
-enum UpgradeType
-{
-	Shrink UMETA(DisplayName = "Bullet Shrink Upgrade"), // Yellow Cone
-	Expand UMETA(DisplayName = "Bullet Expand Upgrade"), // Red Cylinder
-	Regular UMETA(DisplayName = "Bullet Default Size Upgrade"), // Wooden Box
-	DoubleExpand UMETA(DisplayName = "Bullet Extra Expand Upgrade") // Orange Capsule
-};
-*/
 
 UCLASS(config=Game)
 class AGDENG02_UECHAL2Projectile : public AActor
@@ -33,10 +24,12 @@ class AGDENG02_UECHAL2Projectile : public AActor
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Movement, meta = (AllowPrivateAccess = "true"))
 	UProjectileMovementComponent* ProjectileMovement;
 
+protected:
+	//Called when the game starts
+	virtual void BeginPlay() override;
+
 public:
 	AGDENG02_UECHAL2Projectile();
-
-	void BeginPlay();
 
 	/** called when projectile hits something */
 	UFUNCTION()
@@ -47,14 +40,8 @@ public:
 	/** Returns ProjectileMovement subobject **/
 	UProjectileMovementComponent* GetProjectileMovement() const { return ProjectileMovement; }
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		int bulletUpgrade;
-		//TEnumAsByte<UpgradeType> bulletUpgrade;
+	UStaticMeshComponent* projectileMesh;
 
-	// Logic for Bullet Upgrades
-	void UpgradeProjectile();
-
-protected:
-	//UTP_PickUpComponent* pickUpComp;
+	AGDENG02_UECHAL2Character* Character;
 };
 

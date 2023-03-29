@@ -2,13 +2,10 @@
 
 #include "TP_PickUpComponent.h"
 
-
 UTP_PickUpComponent::UTP_PickUpComponent()
 {
 	// Setup the Sphere Collision
 	SphereRadius = 32.f;
-
-	
 }
 
 void UTP_PickUpComponent::BeginPlay()
@@ -17,36 +14,43 @@ void UTP_PickUpComponent::BeginPlay()
 
 	// Register our Overlap Event
 	OnComponentBeginOverlap.AddDynamic(this, &UTP_PickUpComponent::OnSphereBeginOverlap);
-
 }
 
 void UTP_PickUpComponent::OnSphereBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Other Actor Name: %s"), *OverlappedComponent->GetOwner()->GetName());
-
-	if(pickUpType == Weapon)
+	// Checking if it is a First Person Character overlapping
+	AGDENG02_UECHAL2Character* Character = Cast<AGDENG02_UECHAL2Character>(OtherActor);
+	if(Character != nullptr)
 	{
-		// Checking if it is a First Person Character overlapping
-		AGDENG02_UECHAL2Character* Character = Cast<AGDENG02_UECHAL2Character>(OtherActor);
-		if (Character != nullptr)
+		// Notify that the actor is being picked up
+		OnPickUp.Broadcast(Character);
+
+		// Unregister from the Overlap Event so it is no longer triggered
+		OnComponentBeginOverlap.RemoveAll(this);
+
+		Character->currentBulletType = this->upgradeType;
+		UE_LOG(LogTemp, Warning, TEXT("Current Bullet: %d"), Character->currentBulletType);
+
+		switch (this->upgradeType)
 		{
-			// Notify that the actor is being picked up
-			OnPickUp.Broadcast(Character);
-
-			// Unregister from the Overlap Event so it is no longer triggered
-			OnComponentBeginOverlap.RemoveAll(this);
+		case 1:
+			// change projectile size to small
+			UE_LOG(LogTemp, Warning, TEXT("Changing bullet: Small"));
+			break;
+		case 2:
+			// change projectile size to large
+			UE_LOG(LogTemp, Warning, TEXT("Changing bullet: Large"));
+			break;
+		case 3:
+			// change projectile size to huge
+			UE_LOG(LogTemp, Warning, TEXT("Changing bullet: Huge"));
+			break;
+		default:
+			// change projectile size to normal
+			UE_LOG(LogTemp, Warning, TEXT("Changing bullet: Normal"));
 		}
-	}
-	else if (pickUpType == Upgrade) 
-	{
-		//this->Projectile = Cast<AGDENG02_UECHAL2Projectile>(OtherActor);
-		
-		//Logic to Pass Upgrade Type to Projectile
 
-		myUpgrade->setUpgradeType();
-
-		//Destroy PickUp Object
-		OverlappedComponent->GetOwner()->Destroy();
+		this->GetOwner()->Destroy();
+		//OverlappedComponent->GetOwner()->Destroy();
 	}
-	
 }
