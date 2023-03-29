@@ -82,6 +82,6 @@ public:
 	/** Returns FirstPersonCameraComponent subobject **/
 	UCameraComponent* GetFirstPersonCameraComponent() const { return FirstPersonCameraComponent; }
 
-
+	UPROPERTY(EditAnywhere) int currentBulletType = 0;
 };
 

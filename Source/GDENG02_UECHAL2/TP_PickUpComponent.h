@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Components/SphereComponent.h"
+#include "GDENG02_UECHAL2Projectile.h"
 #include "GDENG02_UECHAL2Character.h"
 #include "TP_PickUpComponent.generated.h"
 
@@ -21,6 +22,9 @@ public:
 	/** Delegate to whom anyone can subscribe to receive this event */
 	UPROPERTY(BlueprintAssignable, Category = "Interaction")
 	FOnPickUp OnPickUp;
+
+	AGDENG02_UECHAL2Projectile* projectile;
+	UPROPERTY(EditAnywhere) int upgradeType;
 
 	UTP_PickUpComponent();
 protected:

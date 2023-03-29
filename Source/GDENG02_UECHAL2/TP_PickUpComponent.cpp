@@ -27,5 +27,30 @@ void UTP_PickUpComponent::OnSphereBeginOverlap(UPrimitiveComponent* OverlappedCo
 
 		// Unregister from the Overlap Event so it is no longer triggered
 		OnComponentBeginOverlap.RemoveAll(this);
+
+		Character->currentBulletType = this->upgradeType;
+		UE_LOG(LogTemp, Warning, TEXT("Current Bullet: %d"), Character->currentBulletType);
+
+		switch (this->upgradeType)
+		{
+		case 1:
+			// change projectile size to small
+			UE_LOG(LogTemp, Warning, TEXT("Changing bullet: Small"));
+			break;
+		case 2:
+			// change projectile size to large
+			UE_LOG(LogTemp, Warning, TEXT("Changing bullet: Large"));
+			break;
+		case 3:
+			// change projectile size to huge
+			UE_LOG(LogTemp, Warning, TEXT("Changing bullet: Huge"));
+			break;
+		default:
+			// change projectile size to normal
+			UE_LOG(LogTemp, Warning, TEXT("Changing bullet: Normal"));
+		}
+
+		this->GetOwner()->Destroy();
+		//OverlappedComponent->GetOwner()->Destroy();
 	}
 }

@@ -4,7 +4,52 @@
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Components/SphereComponent.h"
 
-AGDENG02_UECHAL2Projectile::AGDENG02_UECHAL2Projectile() 
+
+void AGDENG02_UECHAL2Projectile::BeginPlay()
+{
+	Super::BeginPlay();
+
+	this->projectileMesh = this->FindComponentByClass<UStaticMeshComponent>();
+	if (this->projectileMesh != nullptr)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Projectile staticMesh found!!!"));
+	}
+
+	APlayerController* playerController = GetWorld()->GetFirstPlayerController();
+	if (playerController != nullptr)
+	{
+		this->Character = Cast<AGDENG02_UECHAL2Character>(playerController->GetPawn());
+		if (this->Character != nullptr)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("new bullet type: %d"), this->Character->currentBulletType);
+
+			switch (this->Character->currentBulletType) 
+			{
+			case 1:
+				this->projectileMesh->SetRelativeScale3D(FVector(0.1f, 0.1f, 0.1f));
+				//this->SetActorScale3D(FVector(0.5f, 0.5f, 0.5f));
+				UE_LOG(LogTemp, Warning, TEXT("Changing bullet: Small"));
+				break;
+			case 2:
+				this->projectileMesh->SetRelativeScale3D(FVector(0.5f, 0.5f, 0.5f));
+				//this->SetActorScale3D(FVector(1.5f, 1.5f, 1.5f));
+				UE_LOG(LogTemp, Warning, TEXT("Changing bullet: Large"));
+				break;
+			case 3:
+				this->projectileMesh->SetRelativeScale3D(FVector(1.0f, 1.0f, 1.0f));
+				//this->SetActorScale3D(FVector(2.0f, 2.0f, 2.0f));
+				UE_LOG(LogTemp, Warning, TEXT("Changing bullet: Huge"));
+				break;
+			default:
+				this->projectileMesh->SetRelativeScale3D(FVector(0.2f, 0.2f, 0.2f));
+				//this->SetActorScale3D(FVector(1.0f, 1.0f, 1.0f));
+				UE_LOG(LogTemp, Warning, TEXT("Changing bullet: Normal"));
+			}
+		}
+	}
+}
+
+AGDENG02_UECHAL2Projectile::AGDENG02_UECHAL2Projectile()
 {
 	// Use a sphere as a simple collision representation
 	CollisionComp = CreateDefaultSubobject<USphereComponent>(TEXT("SphereComp"));
